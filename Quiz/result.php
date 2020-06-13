@@ -6,7 +6,12 @@
     $dbname = "quiz";
     $message="";
     $conn = new mysqli($servername, $username, $password, $dbname);
+    if(isset($_SESSION['name'])==NULL){
+        die("you are not loged in");
+    }
+    else{
     $i=0;
+    $j=0;
     $sql="SELECT * from quiz.check";
     $res=$conn->query($sql);
     if(isset($_POST['back'])){
@@ -19,39 +24,64 @@
         }
         header("Location: main.php");
     }
+}
    ?>
 <!DOVTYPE html>
 <html>
     <head>
         <title>Result</title>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-    <form method="POST">
+    <h1>ONLINE:Quiz</h1>
+    <?php echo "<h2 style='font-style:italic'>Welcome ". $_SESSION['name']."</h2>"?>
+    <form method="POST" class="home">
         <input type="hidden" name="back">
         <input type="submit" name="back" value="HOME">
     </form>
+    <form method="POST" action="logout.php" class="logout">
+        <input type="hidden" name="logout">
+        <input type="submit" name="logout" value="Log Out">
+    </form>
+    <hr class="hr">
     <table border="1px">
     <?php
-    while($row2=$res->fetch_assoc()){?>
+    while($row2=$res->fetch_assoc()){
+        $j++;?>
         <tr>
+            <td><?php echo "Q".$row2["sno"].")";?></td>
         <td>Your answer is <?php echo $row2["your_ans"]?></td> 
            <td><?php
            
            if($row2["your_ans"]==NULL){
-               echo "You didn't mark any answer";
+               echo "You didn't answer";
            } 
            elseif($row2["your_ans"]===$row2["correct"]){
-                $i++;
+                $i+=2;
                 echo "<span style='color:green'>Correct</span>";
            }
             else{
+                $i--;
                  echo "<span style='color:red'>Incorrect</span>";
             }?></td>
         </tr>
         <?php }?>
     <table>
-    <?php echo "Your Marks is ".$i;
-    ?>
+    <div class="tot">
+    <?php echo "<h2>Your Marks is ".$i."</h2>";
+    if($i>$j){
+        echo "<h3 style='color:green'>GOOD JOB 👍</h3>";?>
+        <script> var audio = new Audio("winner.mp3");
+        audio.play();
+         </script>
+     <?php }
+    else{
+        echo "<h3 style='color:red'>BETTER LUCK NEXT TIME 😜</h3>";?>
+        <script> var audio = new Audio("loser.mp3");
+        audio.play();
+         </script>
+    <?php }?>
     </body>
 </html>

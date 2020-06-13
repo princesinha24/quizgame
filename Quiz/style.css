@@ -1,0 +1,90 @@
+ *{
+     box-sizing: border-box;
+ }
+ body{
+     background-image: url(img.jpg);
+     background-position: center;
+    background-size: cover;
+ }
+ h1{
+     text-align: center;
+     color: green;
+ }
+ .que{
+     font-weight: bold;
+ }
+ .row1{
+    border: 1px solid black;
+    float:left;
+    width:85%;
+ }
+ .row2{
+    float:right;
+    width:12%;
+    border:1px solid black;
+ }
+ .sub{
+     clear: both;
+     font-weight: bold;
+ }
+ .high{
+     height:40px;
+ }
+ .form{
+    clear: both;
+     margin: 40px auto;
+     width:800px;
+     text-align: center;
+ }
+ .for{
+    margin: 0px auto;
+    text-align: left;
+ }
+ .home{
+    width: 50%;
+    float:left;
+ }
+ .logout{
+     width: 50%;
+     float:right;
+     text-align: right;
+     margin-bottom: 10px;
+ }
+ .hr{
+     
+     clear: both;
+ }
+ .new_account{
+     width:50%;
+     float:left;
+ }
+ @media(max-width:768px){
+    .row1{
+        border: 1px solid black;
+        float:left;
+        width:78%;
+     }
+     .row2{
+        float:right;
+        width:20%;
+        border:1px solid black;
+     }
+     .high{
+        height:75px;
+    }
+    .form{
+        clear: both;
+        text-align: left;
+        margin: 10px auto;
+    }
+    .for{
+        margin: 0px 0px;
+        
+    }
+ }
+ .tot{ 
+     clear: both;
+     text-align: center;
+     font-weight: bold;
+
+ }
