@@ -29,6 +29,7 @@
                 if($row["Password"]==$_POST["pwd"]){
                     $_SESSION['account']=$row["UserName"];
                     $_SESSION['name']=$row["name"];
+                    $_SESSION['qno']=$row["qno"];
                     header("Location: main.php");
                 }
                 else{

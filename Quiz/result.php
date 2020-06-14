@@ -24,6 +24,16 @@
         }
         header("Location: main.php");
     }
+    if(isset($_POST['level'])){
+        $_SESSION['qno']+=10;
+        $sql="SELECT * from quiz.check";
+        $res=$conn->query($sql);
+        while($row2=$res->fetch_assoc()){
+        $sql1="UPDATE quiz.check SET your_ans=NULL,correct=NUll WHERE sno='".$row2['sno']."'";
+        $conn->query($sql1);
+        }
+        header("Location: main.php");
+    }
 }
    ?>
 <!DOVTYPE html>
@@ -49,7 +59,7 @@
     <table border="1px">
     <?php
     while($row2=$res->fetch_assoc()){
-        $j++;?>
+        ?>
         <tr>
             <td><?php echo "Q".$row2["sno"].")";?></td>
         <td>Your answer is <?php echo $row2["your_ans"]?></td> 
@@ -71,11 +81,15 @@
     <table>
     <div class="tot">
     <?php echo "<h2>Your Marks is ".$i."</h2>";
-    if($i>$j){
+    if($i>=12){
         echo "<h3 style='color:green'>GOOD JOB 👍</h3>";?>
         <script> var audio = new Audio("winner.mp3");
         audio.play();
          </script>
+         <form method="POST" class="next">
+        <input type="hidden" name="level">
+        <input type="submit" name="level" value="Next level">
+    </form>
      <?php }
     else{
         echo "<h3 style='color:red'>BETTER LUCK NEXT TIME 😜</h3>";?>

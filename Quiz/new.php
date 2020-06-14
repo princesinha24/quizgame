@@ -1,7 +1,7 @@
 <?php
 
     $message="";
-    
+
     if(isset($_POST['cre'])){
         $servername = "localhost";
         $username = "root";
@@ -25,8 +25,8 @@
             $result=$conn->query($select);
             $no=mysqli_num_rows($result);
             if($no==0){
-                $sql="INSERT INTO user ( name,UserName, Password,Email)
-                 VALUES ('".$name."','".$UserName."','".$pwd."','".$gmail."')";
+                $sql="INSERT INTO user ( name,UserName, Password,Email,qno)
+                 VALUES ('".$name."','".$UserName."','".$pwd."','".$gmail."',1)";
                 if($conn->query($sql)){
                     $message="user id has been created";
                 }

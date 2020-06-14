@@ -8,7 +8,7 @@
     $conn = new mysqli($servername, $username, $password, $dbname);
     if(isset($_POST['add'])){
         if(!empty($_POST['question'])&& !empty($_POST['ans'])&& !empty($_POST['opta'])&& !empty($_POST['optb'])&& !empty($_POST['optc'])&& !empty($_POST['optd'])){
-        $sql="SELECT ques from math where ques='".$_POST['question']."'";
+        $sql="SELECT * from math where ques='".$_POST['question']."'";
         $result=$conn->query($sql);
         $row=mysqli_num_rows($result);
         if($row==0){

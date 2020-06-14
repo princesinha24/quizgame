@@ -14,14 +14,14 @@
      font-weight: bold;
  }
  .row1{
+     width: 100%;
     border: 1px solid black;
-    float:left;
-    width:85%;
  }
- .row2{
-    float:right;
-    width:12%;
-    border:1px solid black;
+ .mark{
+     margin-right: 10px;
+     float:right;
+    text-align: right;
+    color:red;
  }
  .sub{
      clear: both;
@@ -51,7 +51,6 @@
      margin-bottom: 10px;
  }
  .hr{
-     
      clear: both;
  }
  .new_account{
@@ -59,19 +58,6 @@
      float:left;
  }
  @media(max-width:768px){
-    .row1{
-        border: 1px solid black;
-        float:left;
-        width:78%;
-     }
-     .row2{
-        float:right;
-        width:20%;
-        border:1px solid black;
-     }
-     .high{
-        height:75px;
-    }
     .form{
         clear: both;
         text-align: left;
@@ -86,5 +72,4 @@
      clear: both;
      text-align: center;
      font-weight: bold;
-
  }

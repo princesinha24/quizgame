@@ -5,7 +5,7 @@
     $password = "";
     $dbname = "quiz";
     $message="";
-
+    $k=0;
     $conn = new mysqli($servername, $username, $password, $dbname);
     $i=0;
     if(isset($_SESSION['name'])==NULL){
@@ -17,9 +17,7 @@
         WHERE sno='".$_POST['sno']."'";
         $conn->query($sql1);
     }
-}
-    
-    
+}      
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -39,39 +37,38 @@
     <hr class="hr">
         <div class="row1">
         <?php
-            $sql="SELECT * FROM Math";
+            $sql="SELECT DISTINCT * FROM Math";
             $result=$conn->query($sql);
-            while($row=$result->fetch_assoc()){ ?>
-            <form method=POST>
+            while($row=$result->fetch_assoc()){ 
+                $k++;
+                if($_SESSION['qno']<=$k AND $i<10){
+                    $i++;
+                    $sql2="SELECT * FROM quiz.check";
+                    $res=$conn->query($sql2);
+                    while($row1=$res->fetch_assoc()){
+                    if($row1["sno"]==$i){ ?>
+                <form method=POST>
                 <div class="que">
-                <?php echo "Q".$row["sno"].")".$row["ques"];?>
+                <?php if($row1["your_ans"]!=NULL){
+                    echo "<span style='color:blue'>Q".$i.")".$row["ques"]."</span>";
+                }
+                else{
+                 echo "Q".$i.")".$row["ques"];
+                }?>
             </div>
                 <input type="radio" name="math" value="A"><?php echo "A)".$row["optA"];?>
                 <input type="radio" name="math" value="B"><?php echo "B)".$row["optB"];?>
                 <input type="radio" name="math" value="C"><?php echo "C)".$row["optC"];?>
                 <input type="radio" name="math" value="D"><?php echo "D)".$row["optD"];?>
                 <input type="hidden" name="ans" value=<?php echo $row["ans"];?>>
-                <input type="hidden" name="sno" value=<?php echo $row["sno"];?>>
+                <input type="hidden" name="sno" value=<?php echo $i;?>>
                 <input type="submit" name="button" value="submit">
+                <span class="mark"><?php echo $row1["your_ans"];?></span>
                 <hr>
             </form>
-            <?php }?>
+            <?php } } }
+         }?>
             </div>
-            <div class="row2">
-                <h5>YOUR ANSWER</h5>
-                <hr>
-            <table >
-            <?php
-                $sql2="SELECT * FROM quiz.check";
-                $res=$conn->query($sql2);
-                 while($row1=$res->fetch_assoc()){ ?>
-                <tr class="high">
-                    <td><?php echo "Q".$row1["sno"].")";?></td>
-                    <td><?php echo $row1["your_ans"];?></td>
-                </tr>
-                 <?php }?>
-            </table>
-                 </div>
             <form method="POST" action="result.php" class="sub">
             <input type="radio" name="cal" value="calc"> I want to submit my quiz
             <input type="submit" name="cal" value="submit Quiz">
