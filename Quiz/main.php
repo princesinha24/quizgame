@@ -6,18 +6,30 @@
     $dbname = "quiz";
     $message="";
     $k=0;
+    date_default_timezone_set('Asia/Kolkata');
     $conn = new mysqli($servername, $username, $password, $dbname);
     $i=0;
     if(isset($_SESSION['name'])==NULL){
         die("you are not loged in");
     }
     else{
+        $t=24*60*60;
+        $h=date("h");
+        $m=date("i");
+        $s=date("s");
+        $count1=((($h*60)+$m)*60)+$s;
+        $p=($_SESSION['time']-$count1+$t)%$t;
     if(isset($_POST['math'])){
+        if($p<=600){
         $sql1="UPDATE quiz.check SET your_ans='".$_POST['math']."',correct='".$_POST['ans']."' 
         WHERE sno='".$_POST['sno']."'";
         $conn->query($sql1);
     }
-}      
+    else{
+        $message="<div style='color:red'>Time is over</div>";
+    }   
+} 
+}  
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -29,7 +41,26 @@
     </head>
     <body>
         <h1>ONLINE:Quiz</h1>
+        <p id="demo"></p>
+
+        <script>
+        var myVar = setInterval(myTimer, 998);
+        var t=<?php echo $p;?>;
+        function myTimer() {
+            if(t<=600 && t>=0){
+            document.getElementById("demo").innerHTML = t;
+            t--;
+            }
+            else if(t>=600){
+                document.getElementById("demo").innerHTML = 0;
+                alert("time is over click to submit quiz");
+                t=-1;
+            }
+        }
+</script>
+
         <?php echo "<h2 style='font-style:italic'>Welcome ". $_SESSION['name']."</h2>"?>
+        <?php echo $message;?>
         <form method="POST" action="logout.php" class="logout">
         <input type="hidden" name="logout">
         <input type="submit" name="logout" value="Log Out">
@@ -70,8 +101,9 @@
          }?>
             </div>
             <form method="POST" action="result.php" class="sub">
-            <input type="radio" name="cal" value="calc"> I want to submit my quiz
+            <input type="hidden" name="cal" value="calc"> I want to submit my quiz
             <input type="submit" name="cal" value="submit Quiz">
             </form>
+            
     </body>
 </html>

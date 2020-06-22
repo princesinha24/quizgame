@@ -6,7 +6,7 @@
     $dbname = "quiz";
     $message="";
     $_session['arr']=array("sd","gffd");
-
+    date_default_timezone_set('Asia/Kolkata');
     if(isset($_POST["hai"])){
         if(empty($_POST["user"])){
             $message="Enter Your User Id";
@@ -30,6 +30,11 @@
                     $_SESSION['account']=$row["UserName"];
                     $_SESSION['name']=$row["name"];
                     $_SESSION['qno']=$row["qno"];
+                    $h=date("h");
+                    $m=date("i");
+                    $s=date("s");
+                    $count=((($h*60)+$m)*60)+$s+600;
+                    $_SESSION['time']=$count;
                     header("Location: main.php");
                 }
                 else{

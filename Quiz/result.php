@@ -5,6 +5,8 @@
     $password = "";
     $dbname = "quiz";
     $message="";
+    date_default_timezone_set('Asia/Kolkata');
+    
     $conn = new mysqli($servername, $username, $password, $dbname);
     if(isset($_SESSION['name'])==NULL){
         die("you are not loged in");
@@ -15,6 +17,11 @@
     $sql="SELECT * from quiz.check";
     $res=$conn->query($sql);
     if(isset($_POST['back'])){
+        $h=date("h");
+         $m=date("i");
+        $s=date("s");
+        $count=((($h*60)+$m)*60)+$s+600;
+        $_SESSION['time']=$count;
         $sql="SELECT * from quiz.check";
         $res=$conn->query($sql);
         while($row2=$res->fetch_assoc()){
@@ -25,6 +32,11 @@
         header("Location: main.php");
     }
     if(isset($_POST['level'])){
+        $h=date("h");
+        $m=date("i");
+        $s=date("s");
+        $count=((($h*60)+$m)*60)+$s+600;
+        $_SESSION['time']=$count;
         $_SESSION['qno']+=10;
         $sql="SELECT * from quiz.check";
         $res=$conn->query($sql);
