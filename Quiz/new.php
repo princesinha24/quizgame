@@ -28,7 +28,23 @@
                 $sql="INSERT INTO user ( name,UserName, Password,Email,qno)
                  VALUES ('".$name."','".$UserName."','".$pwd."','".$gmail."',1)";
                 if($conn->query($sql)){
-                    $message="user id has been created";
+                    //$message="user id has been created";
+                }
+                $sql1="CREATE TABLE $UserName (
+                    sno int,
+                    your_ans varchar(255),
+                    correct varchar(255)
+                )";
+                if($conn->query($sql1)){
+                    $message= "table is created";
+                }
+                else{
+                    $message="table is not created";
+                }
+                for($i=1;$i<=5;$i++){
+                    $sql2="INSERT INTO $UserName(sno, your_ans,correct)
+                    VALUES ($i,NULL,NULL)";
+                    $conn->query($sql2);
                 }
             }
             else{

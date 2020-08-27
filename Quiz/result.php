@@ -12,37 +12,37 @@
         die("you are not loged in");
     }
     else{
-    $i=0;
-    $j=0;
-    $sql="SELECT * from quiz.check";
-    $res=$conn->query($sql);
-    if(isset($_POST['back'])){
-        $h=date("h");
-         $m=date("i");
-        $s=date("s");
-        $count=((($h*60)+$m)*60)+$s+600;
-        $_SESSION['time']=$count;
-        $sql="SELECT * from quiz.check";
+        $users=$_SESSION['account'];
+        $i=0;
+        $j=0;
+        $sql="SELECT * from $users";
         $res=$conn->query($sql);
-        while($row2=$res->fetch_assoc()){
-        $sql1="UPDATE quiz.check SET your_ans=NULL,correct=NUll WHERE sno='".$row2['sno']."'";
-        if($conn->query($sql1)){
+        if(isset($_POST['back'])){
+            $h=date("h");
+            $m=date("i");
+            $s=date("s");
+            $count=((($h*60)+$m)*60)+$s+600;
+            $_SESSION['time']=$count;
+            $sql="SELECT * from $users";
+            $res=$conn->query($sql);
+            while($row2=$res->fetch_assoc()){
+                $sql1="UPDATE $users SET your_ans=NULL,correct=NUll WHERE sno='".$row2['sno']."'";
+                $conn->query($sql1);
+            }
+            header("Location: main.php");
         }
-        }
-        header("Location: main.php");
-    }
     if(isset($_POST['level'])){
         $h=date("h");
         $m=date("i");
         $s=date("s");
         $count=((($h*60)+$m)*60)+$s+600;
         $_SESSION['time']=$count;
-        $_SESSION['qno']+=10;
-        $sql="SELECT * from quiz.check";
+        $_SESSION['qno']+=5;
+        $sql="SELECT * from $users";
         $res=$conn->query($sql);
         while($row2=$res->fetch_assoc()){
-        $sql1="UPDATE quiz.check SET your_ans=NULL,correct=NUll WHERE sno='".$row2['sno']."'";
-        $conn->query($sql1);
+            $sql1="UPDATE $users SET your_ans=NULL,correct=NUll WHERE sno='".$row2['sno']."'";
+            $conn->query($sql1);
         }
         header("Location: main.php");
     }
@@ -93,7 +93,7 @@
     <table>
     <div class="tot">
     <?php echo "<h2>Your Marks is ".$i."</h2>";
-    if($i>=12){
+    if($i>=6){
         echo "<h3 style='color:green'>GOOD JOB 👍</h3>";?>
         <script> var audio = new Audio("winner.mp3");
         audio.play();

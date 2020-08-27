@@ -72,6 +72,11 @@
             <td><input type="text" name="ans" placeholder="Answer"></td>
             </tr>
             </table>
+            select subject:
+            <input type="radio" name="subject" value="GK">GK
+            <input type="radio" name="subject" value="SPORTS">SPORTS
+            <input type="radio" name="subject" value="MATHS">MATHS
+            <input type="radio" name="subject" value="COMPUTER">COMPUTER
             <input type="submit" value="Add question" name="add">
         </form>
         <script>

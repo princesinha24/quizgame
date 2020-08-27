@@ -23,13 +23,20 @@
                 $message="Wrong User Id";
             }
             else{
-                $sql="SELECT * FROM user WHERE UserName='".$_POST["user"]."'";
+                $users=$_POST["user"];
+                $sql="SELECT * FROM user WHERE UserName='".$_POST['user']."'";
                 $result=$conn->query($sql);
                 $row=$result->fetch_assoc();
                 if($row["Password"]==$_POST["pwd"]){
                     $_SESSION['account']=$row["UserName"];
                     $_SESSION['name']=$row["name"];
                     $_SESSION['qno']=$row["qno"];
+                    $sql1="SELECT * from $users";
+                    $res=$conn->query($sql1);
+                    while($row2=$res->fetch_assoc()){
+                    $sql1="UPDATE $users SET your_ans=NULL,correct=NULL WHERE sno='".$row2['sno']."'";
+                    $conn->query($sql1);
+                    }
                     $h=date("h");
                     $m=date("i");
                     $s=date("s");

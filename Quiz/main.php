@@ -13,6 +13,7 @@
         die("you are not loged in");
     }
     else{
+        $users=$_SESSION['account'];
         $t=24*60*60;
         $h=date("h");
         $m=date("i");
@@ -21,7 +22,8 @@
         $p=($_SESSION['time']-$count1+$t)%$t;
     if(isset($_POST['math'])){
         if($p<=600){
-        $sql1="UPDATE quiz.check SET your_ans='".$_POST['math']."',correct='".$_POST['ans']."' 
+            
+        $sql1="UPDATE $users SET your_ans='".$_POST['math']."',correct='".$_POST['ans']."' 
         WHERE sno='".$_POST['sno']."'";
         $conn->query($sql1);
     }
@@ -72,9 +74,9 @@
             $result=$conn->query($sql);
             while($row=$result->fetch_assoc()){ 
                 $k++;
-                if($_SESSION['qno']<=$k AND $i<10){
+                if($_SESSION['qno']<=$k AND $i<5){
                     $i++;
-                    $sql2="SELECT * FROM quiz.check";
+                    $sql2="SELECT * FROM $users where sno=$i";
                     $res=$conn->query($sql2);
                     while($row1=$res->fetch_assoc()){
                     if($row1["sno"]==$i){ ?>
@@ -87,13 +89,12 @@
                  echo "Q".$i.")".$row["ques"];
                 }?>
             </div>
-                <input type="radio" name="math" value="A"><?php echo "A)".$row["optA"];?>
-                <input type="radio" name="math" value="B"><?php echo "B)".$row["optB"];?>
-                <input type="radio" name="math" value="C"><?php echo "C)".$row["optC"];?>
-                <input type="radio" name="math" value="D"><?php echo "D)".$row["optD"];?>
+                <input type="radio" name="math" value="A" onchange="this.form.submit()"><?php echo "A)".$row["optA"];?>
+                <input type="radio" name="math" value="B" onchange="this.form.submit()"><?php echo "B)".$row["optB"];?>
+                <input type="radio" name="math" value="C" onchange="this.form.submit()"><?php echo "C)".$row["optC"];?>
+                <input type="radio" name="math" value="D" onchange="this.form.submit()"><?php echo "D)".$row["optD"];?>
                 <input type="hidden" name="ans" value=<?php echo $row["ans"];?>>
                 <input type="hidden" name="sno" value=<?php echo $i;?>>
-                <input type="submit" name="button" value="submit">
                 <span class="mark"><?php echo $row1["your_ans"];?></span>
                 <hr>
             </form>
